@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: configApp
+
+  cloud:
+    config:
+      server:
+        encrypt:
+          enabled: true
+encrypt:
+  key: didispace
