@@ -7,5 +7,6 @@ spring:
       server:
         encrypt:
           enabled: true
+
 encrypt:
   key: didispace
