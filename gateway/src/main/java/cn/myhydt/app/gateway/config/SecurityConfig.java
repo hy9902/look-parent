@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 @Slf4j
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -40,15 +40,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+    /*    http//.csrf().disable()
+                .antMatcher("/**")
                 .authorizeRequests()
                 .antMatchers("/", "/resources/**", "/login", "/about").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 // ...
-                .formLogin();
+                .formLogin();*/
+
 
     }
 }

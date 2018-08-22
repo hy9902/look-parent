@@ -1,11 +1,9 @@
 package cn.myhydt.app.gateway.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.DispatcherHandler;
 
 /**
  * @author hy9902
@@ -15,8 +13,13 @@ import org.springframework.web.reactive.DispatcherHandler;
 @Slf4j
 public class HttpConfig {
 
-    @Bean
+    /*@Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder){
         return builder.build();
+    }*/
+
+    @Bean
+    RedisRateLimiter redisRateLimiter() {
+        return new RedisRateLimiter(1, 2);
     }
 }
