@@ -20,6 +20,6 @@ public class HttpConfig {
 
     @Bean
     RedisRateLimiter redisRateLimiter() {
-        return new RedisRateLimiter(1, 2);
+        return new RedisRateLimiter(100, 200);
     }
 }
