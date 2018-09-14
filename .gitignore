@@ -4,15 +4,9 @@
 
 # IntelliJ project files
 .idea
-*.iml
 out
 gen
-.gitignore
-.mvn/
-mvnw
-mvnw.cmd
-pom.xml
 target/
 common-service/target/
 config/target/
-user/target/
+
