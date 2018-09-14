@@ -1,0 +1,43 @@
+server:
+  port: 9000
+
+
+eureka:
+  instance:
+    metadata-map:
+      zone: zone-1
+  client:
+    fetch-registry: true
+    service-url:
+      zone-1:  http://s1.cn:8761/eureka/
+    region: gd
+    register-with-eureka: true
+    prefer-same-zone-eureka: true
+    availability-zones:
+      gd: zone-1,zone-2,zone-3
+    healthcheck:
+      enabled: true
+
+
+logging:
+  level:
+    root: info
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+spring:
+  security:
+    user:
+      name: user
+      password: hy9902
+  redis:
+    host: 127.0.0.1
+    port: 6379

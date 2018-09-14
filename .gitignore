@@ -12,4 +12,8 @@ gen
 mvnw
 mvnw.cmd
 pom.xml
-src/
+target/
+common-service/target/
+config/target/generated-sources/
+config/target/generated-test-sources/
+user/target/generated-sources/

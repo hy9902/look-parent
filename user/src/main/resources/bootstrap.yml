@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: userApp
+
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: configApp
+      label: master
+      profile: default
+#      uri: http://localhost:8888
+
+
