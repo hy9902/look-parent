@@ -9,6 +9,6 @@ spring:
         service-id: configApp
       label: master
       profile: default
-      uri: http://localhost:8888
+#      uri: http://localhost:8888
 
 
