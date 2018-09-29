@@ -5,11 +5,11 @@ server:
 eureka:
   instance:
     metadata-map:
-      zone: zone-1
+      zone: zone-2
   client:
     fetch-registry: true
     service-url:
-      zone-1:  http://s1.cn:8761/eureka/
+      zone-2:  http://s2.cn:8762/eureka/
     region: gd
     register-with-eureka: true
     prefer-same-zone-eureka: true
@@ -38,6 +38,7 @@ spring:
     user:
       name: user
       password: hy9902
-  redis:
-    host: 127.0.0.1
-    port: 6379
+      roles: SUPERADMIN
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379

@@ -11,6 +11,10 @@ eureka:
     availability-zones:
       gd: zone-1,zone-2,zone-3
   environment: default
+  server:
+    enable-self-preservation: false
+    wait-time-in-ms-when-sync-empty: 100
+    eviction-interval-timer-in-ms: 500
 management:
   endpoints:
     web:
@@ -37,7 +41,7 @@ eureka:
       zone-2: http://s2.cn:8762/eureka/
       zone-3: http://s3.cn:8763/eureka/
   server:
-    waitTimeInMsWhenSyncEmpty: 0
+    enable-self-preservation: false
 
 spring:
   profiles: s1
@@ -60,7 +64,7 @@ eureka:
       zone-2: http://s2.cn:8762/eureka/
       zone-3: http://s3.cn:8763/eureka/
   server:
-    waitTimeInMsWhenSyncEmpty: 0
+    enable-self-preservation: false
 ---
 spring:
   profiles: s3
@@ -79,5 +83,5 @@ eureka:
       zone-2: http://s2.cn:8762/eureka/
       zone-3: http://s3.cn:8763/eureka/
   server:
-    waitTimeInMsWhenSyncEmpty: 0
+    enable-self-preservation: false
 ---
