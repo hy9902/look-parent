@@ -7,6 +7,8 @@ import io.netty.handler.codec.http.*;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.util.CharsetUtil;
 
+import java.net.URL;
+
 import static io.netty.handler.codec.http.HttpMethod.GET;
 import static io.netty.handler.codec.http.HttpResponseStatus.*;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
@@ -16,6 +18,13 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
  * @create 2018-10-09 15:11
  */
 public class WebSocketIndexPageHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
+
+    static {
+        URL location = WebSocketIndexPageHandler.class
+                .getProtectionDomain().getCodeSource()
+                .getLocation();
+    }
+
 
     private final String websocketPath;
 

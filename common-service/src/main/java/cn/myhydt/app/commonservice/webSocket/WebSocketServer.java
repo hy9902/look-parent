@@ -1,12 +1,15 @@
 package cn.myhydt.app.commonservice.webSocket;
 
-import com.sun.deploy.config.Platform;
-import com.sun.javafx.PlatformUtil;
+
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
@@ -14,6 +17,7 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
+import io.netty.util.concurrent.ImmediateEventExecutor;
 import io.netty.util.internal.PlatformDependent;
 
 import javax.net.ssl.SSLException;
@@ -35,6 +39,11 @@ public final class WebSocketServer {
     private ServerBootstrap serverBootstrap;
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
+
+    /** 服务器启动channel */
+    private Channel serverChannel;
+    /** 管理所有websocket channel */
+    private final ChannelGroup channelGroup = new DefaultChannelGroup(ImmediateEventExecutor.INSTANCE);
 
 
     public WebSocketServer(){
@@ -73,7 +82,7 @@ public final class WebSocketServer {
                     .channel(channelClass)
                     .childOption(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new WebSocketServerInitializer(sslCtx));
+                    .childHandler(new WebSocketServerInitializer(sslCtx, channelGroup));
 
 
         } catch (CertificateException ce){
@@ -86,6 +95,9 @@ public final class WebSocketServer {
 
     public void start() {
         try {
+            ChannelFuture channelFuture = serverBootstrap.bind(port);
+            channelFuture.syncUninterruptibly();
+            serverChannel = channelFuture.channel();
             serverBootstrap.bind(port).sync().channel().closeFuture().sync();
         } catch (InterruptedException ie){
             ie.printStackTrace();
@@ -96,6 +108,9 @@ public final class WebSocketServer {
     }
 
     public void shutdown(){
+        if(serverChannel != null){
+            serverChannel.close();
+        }
         bossGroup.shutdownGracefully();
         workerGroup.shutdownGracefully();
     }

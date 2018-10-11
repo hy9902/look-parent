@@ -2,8 +2,10 @@ package cn.myhydt.app.commonservice.webSocket;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.group.ChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,23 @@ import java.util.Locale;
 public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocketFrame> {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSocketFrameHandler.class);
+
+    private ChannelGroup channelGroup;
+
+    public WebSocketFrameHandler(ChannelGroup channelGroup) {
+        this.channelGroup = channelGroup;
+    }
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        if(evt instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
+            channelGroup.add(ctx.channel());
+            channelGroup.writeAndFlush(new TextWebSocketFrame("Client " + ctx.channel() + " join!"));
+        } else {
+            super.userEventTriggered(ctx, evt);
+        }
+
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame frame) throws Exception {

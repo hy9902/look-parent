@@ -2,6 +2,7 @@ package cn.myhydt.app.commonservice.webSocket;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
@@ -17,9 +18,11 @@ public class WebSocketServerInitializer extends ChannelInitializer<SocketChannel
 
     private static final String WEBSOCKET_PATH = "/websocket";
     private final SslContext sslCtx;
+    private final ChannelGroup channelGroup;
 
-    public WebSocketServerInitializer(SslContext sslCtx){
+    public WebSocketServerInitializer(SslContext sslCtx, ChannelGroup channelGroup){
         this.sslCtx = sslCtx;
+        this.channelGroup = channelGroup;
     }
 
 
@@ -34,6 +37,6 @@ public class WebSocketServerInitializer extends ChannelInitializer<SocketChannel
         pipeline.addLast(new WebSocketServerCompressionHandler());
         pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH, null, true));
         pipeline.addLast(new WebSocketIndexPageHandler(WEBSOCKET_PATH));
-        pipeline.addLast(new WebSocketFrameHandler());
+        pipeline.addLast(new WebSocketFrameHandler(channelGroup));
     }
 }
