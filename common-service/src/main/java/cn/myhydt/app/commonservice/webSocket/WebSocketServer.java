@@ -81,6 +81,7 @@ public final class WebSocketServer {
             serverBootstrap.group(bossGroup, workerGroup)
                     .channel(channelClass)
                     .childOption(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000)
+                    .childOption(ChannelOption.SO_TIMEOUT, 10)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new WebSocketServerInitializer(sslCtx, channelGroup));
 
@@ -94,23 +95,16 @@ public final class WebSocketServer {
     }
 
     public void start() {
-        try {
             ChannelFuture channelFuture = serverBootstrap.bind(port);
             channelFuture.syncUninterruptibly();
             serverChannel = channelFuture.channel();
-            serverBootstrap.bind(port).sync().channel().closeFuture().sync();
-        } catch (InterruptedException ie){
-            ie.printStackTrace();
-        } finally {
-            shutdown();
-        }
-
     }
 
     public void shutdown(){
         if(serverChannel != null){
             serverChannel.close();
         }
+        channelGroup.close();
         bossGroup.shutdownGracefully();
         workerGroup.shutdownGracefully();
     }

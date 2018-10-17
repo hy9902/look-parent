@@ -1,5 +1,5 @@
 server:
-  port: 9001
+  port: 9000
 
 
 eureka:
@@ -15,30 +15,33 @@ eureka:
     prefer-same-zone-eureka: true
     availability-zones:
       gd: zone-1,zone-2,zone-3
-    healthcheck:
-      enabled: true
+#    healthcheck:
+#      enabled: true
 
 
 logging:
   level:
     root: info
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    shutdown:
-      enabled: true
-    health:
-      show-details: always
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
+#  endpoint:
+#    shutdown:
+#      enabled: true
+#    health:
+#      show-details: always
 spring:
   security:
     user:
       name: user
       password: hy9902
       roles: SUPERADMIN
-#  redis:
-#    host: 127.0.0.1
-#    port: 6379
+  redis:
+    host: 119.29.74.11
+    port: 6379
+  profiles:
+    active: dev
+

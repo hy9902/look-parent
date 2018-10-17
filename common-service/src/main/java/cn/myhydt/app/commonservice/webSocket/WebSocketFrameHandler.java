@@ -1,8 +1,10 @@
 package cn.myhydt.app.commonservice.webSocket;
 
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
+import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
@@ -39,8 +41,10 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame frame) throws Exception {
         // ping and pong frames already handled
-
-        if (frame instanceof TextWebSocketFrame) {
+        if(frame instanceof PingWebSocketFrame) {
+            logger.info("{} ping!", ctx.channel());
+            ctx.writeAndFlush(Unpooled.buffer(0));
+        } else if (frame instanceof TextWebSocketFrame) {
             // Send the uppercase string back.
             String request = ((TextWebSocketFrame) frame).text();
             logger.info("{} received {}", ctx.channel(), request);

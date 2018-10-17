@@ -1,0 +1,6 @@
+profiles: dev
+spring:
+  devtools:
+    restart:
+      enabled: true
+
