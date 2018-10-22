@@ -4,6 +4,7 @@ import org.junit.Test;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author hy9902
@@ -218,5 +219,12 @@ public class JavaTest {
         System.out.println("排序后");
         println(array);
         System.out.println("---------------");
+    }
+
+    @Test
+    public void testDiv() {
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>(10);
+        map.put("a", "a1");
+        System.out.println(map.remove("a"));
     }
 }

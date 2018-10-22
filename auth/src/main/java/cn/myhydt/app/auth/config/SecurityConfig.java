@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.endpoint.WhitelabelApprovalEndpoint;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 /**
@@ -23,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     protected UserDetailsService userDetailsService() {
+        WhitelabelApprovalEndpoint endpoint;
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         String defaultPw = passwordEncoder().encode("123456");
         manager.createUser(User.withUsername("user1").password(defaultPw).authorities("USER").build());

@@ -119,6 +119,7 @@ public class ApiDocConfig {
 
     @Bean
     UiConfiguration uiConfig() {
+        
         return UiConfigurationBuilder.builder()
                 .deepLinking(true)
                 .displayOperationId(false)

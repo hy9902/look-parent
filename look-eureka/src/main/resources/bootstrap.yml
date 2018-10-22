@@ -1,3 +1,11 @@
 spring:
   application:
     name: eureka
+
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: configApp
+      label: master
+      profile: default
