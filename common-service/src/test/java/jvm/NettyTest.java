@@ -17,10 +17,10 @@ public class NettyTest {
     public void testInBound() {
         ByteBuf buf = Unpooled.buffer();
         for(int i=0; i<9; i++){
-            buf.writeByte(i);
+            buf.writeInt(i);
         }
         ByteBuf input = buf.duplicate();
-        EmbeddedChannel channel = new EmbeddedChannel(new FixedLengthFrameDecoder(3));
+        EmbeddedChannel channel = new EmbeddedChannel(new FixedLengthFrameDecoder(4));
         assertTrue(channel.writeInbound(input.retain()));
         assertTrue(channel.finish());
     }

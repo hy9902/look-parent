@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
+import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
@@ -27,6 +28,15 @@ public class OAuth2ServerConfig {
 
     private static final String DEMO_RESOURCE_ID = "order";
     OAuth2AuthenticationProcessingFilter filter;
+    /**
+     * <p>
+     * ResourceServer 与 AuthorizationServer 是同一个服务器时可以使用默认的
+     * </p>
+     * {@link org.springframework.security.oauth2.provider.token.DefaultTokenServices},
+     * <p>相反若不是同一个服务，则需要使用</p>
+     * {@link org.springframework.security.oauth2.provider.token.RemoteTokenServices}
+     */
+    RemoteTokenServices remoteTokenServices;
 
 
     @Configuration
