@@ -35,7 +35,7 @@ public class IpService {
 
 
     @Retryable(value = RemoteAccessException.class, maxAttempts = 4)
-    public String getIp(String ip, int hit) throws Exception{
+    public String getIp(String ip, int hit) {
         log.info("开始请求: {}, hit: {}", flag.get(), hit);
         flag.incrementAndGet();
         if(flag.get() == hit){

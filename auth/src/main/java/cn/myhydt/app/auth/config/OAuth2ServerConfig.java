@@ -44,7 +44,7 @@ public class OAuth2ServerConfig {
     protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
         @Override
-        public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        public void configure(ResourceServerSecurityConfigurer resources) {
             resources.resourceId(DEMO_RESOURCE_ID).stateless(true);
         }
 
@@ -70,7 +70,7 @@ public class OAuth2ServerConfig {
 
 
         @Override
-        public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        public void configure(AuthorizationServerSecurityConfigurer security) {
             security.allowFormAuthenticationForClients();
         }
 
@@ -94,7 +94,7 @@ public class OAuth2ServerConfig {
         }
 
         @Override
-        public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
             endpoints.tokenStore(new RedisTokenStore(redisConnectionFactory))
                     .authenticationManager(authenticationManager)
                     .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
